@@ -25,6 +25,24 @@ public class Room {
         return !isOccupied && !isDirty;
     }
 
+    public void checkIn() {
+        if (isAvailable()) {
+            isOccupied = true;
+            isDirty = true;
+        } else {
+            System.out.println("Room must be cleaned first.");
+        }
+    }
+
+    public void checkOut() {
+        isOccupied = false;
+        isDirty = true;
+    }
+
+    public void cleanRoom() {
+        isDirty = false;
+    }
+
     public String toString() {
         return String.format(
                 "Beds: %d%n" +
