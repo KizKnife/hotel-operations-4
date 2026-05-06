@@ -25,11 +25,23 @@ public class Room {
         return !isOccupied && !isDirty;
     }
 
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public boolean isDirty() {
+        return isDirty;
+    }
+
     public void checkIn() {
         if (isAvailable()) {
             isOccupied = true;
             isDirty = true;
-        } else {
+        } else if (!isAvailable() && isOccupied && isDirty) {
+            System.out.println("Room is occupied and must be cleaned.");
+        } else if (!isAvailable() && isOccupied) {
+            System.out.println("Room already occupied.");
+        } else if (!isAvailable() && isDirty) {
             System.out.println("Room must be cleaned first.");
         }
     }

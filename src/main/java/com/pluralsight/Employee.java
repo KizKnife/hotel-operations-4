@@ -9,6 +9,7 @@ public class Employee {
     private double payRate;
     private double hoursWorked;
     private LocalTime punchInTime;
+    private LocalTime punchOutTime;
 
     public Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -62,6 +63,10 @@ public class Employee {
         punchInTime = LocalTime.of(time, 0);
     }
 
+    public void punchIn() {
+        punchInTime = LocalTime.now();
+    }
+
     public int punchOut(int time) {
         if (punchInTime == null) {
             System.out.println("Must punch in first.");
@@ -79,6 +84,28 @@ public class Employee {
 
         // Handles overnight shift
         return (24 - inHour) + outHour;
+    }
+
+    public void punchOut() {
+        if (punchInTime == null) {
+            System.out.println("Must punch in first.");
+            return;
+        }
+
+        punchOutTime = LocalTime.now();
+
+        int inHour = punchInTime.getHour();
+        int outHour = punchOutTime.getHour();
+
+        double hours;
+
+        if (outHour >= inHour) {
+            hours = outHour - inHour;
+        } else {
+            hours = (24 - inHour) + outHour;
+        }
+
+        hoursWorked += hours;
     }
 
     public String toString() {
